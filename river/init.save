@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if ! pgrep -x "pipewire" > /dev/null; then
+    ~/.config/river/autostart &
+fi
+
+killall waybar
+waybar &
+
+riverctl keyboard-layout pl
+riverctl default-layout rivertile
+
+term="foot"
+menu="wmenu-run"
+mod="Mod4"
+
+riverctl map normal $mod Return spawn $term
+riverctl map normal $mod R spawn $menu
+riverctl map normal $mod+Shift C close
+riverctl map normal $mod+Shift E exit
+riverctl map normal $mod+Shift R spawn "~/.config/river/init"
+
+#for i in $(seq 1 9)
+#do
+#    tags=$((1 << ($i - 1)))
+#    riverctl map normal $mod $i set-focused-tags $tags
+#    riverctl map normal $mod+Shift $i set-view-tags $tags
+#done

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+if ! pgrep -x "pipewire" > /dev/null; then
+    ~/.config/river/autostart &
+fi
+
+killall waybar
+waybar &
+
+riverctl keyboard-layout pl
+riverctl default-layout rivertile
+
+# Background matches waybar main background
+riverctl background-color 0x1a1a1a
+
+# Focused border matches your clock/brightest module background
+riverctl border-color-focused 0x3c3c3c
+
+# Unfocused border nearly invisible, matches main background
+riverctl border-color-unfocused 0x252525
+
+# Urgent border uses your dim text color to subtly stand out
+riverctl border-color-urgent 0x999999
+
+# Thin border keeps it minimal
+riverctl border-width 2
+
+term="foot"
+menu="wmenu-run"
+mod="Mod4"
+
+riverctl map normal $mod Return spawn $term
+riverctl map normal $mod R spawn $menu
+riverctl map normal $mod+Shift C close
+riverctl map normal $mod+Shift E exit
+riverctl map normal $mod+Shift R spawn "~/.config/river/init"
+riverctl map normal $mod F toggle-fullscreen
+riverctl map normal $mod L spawn 'swaylock -f -c 000000'
+
+for i in $(seq 1 9)
+do
+    tags=$((1 << ($i - 1)))
+    riverctl map normal $mod $i set-focused-tags $tags
+    riverctl map normal $mod+Shift $i set-view-tags $tags
+done

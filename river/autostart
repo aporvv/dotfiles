@@ -1,0 +1,28 @@
+#!/bin/bash
+
+export XDG_CURRENT_DESKTOP=river
+export XDG_SESSION_TYPE=wayland
+
+eval $(gnome-keyring-daemon --start --components=secrets,ssh,pkcs11)
+export GNOME_KEYRING_CONTROL GNOME_KEYRINGPID GPG_AGENT_INFO SSH_AUTH_SOCK
+
+dbus-update-activation-environment --all
+
+pkill swayidle
+
+swayidle -w \
+  timeout 300 'swaylock -f -c 000000' \
+  timeout 600 'riverctl spawn "sudo /usr/bin/zzz"' \
+  before-sleep 'swaylock -f -c 000000' &
+
+/usr/libexec/xdg-desktop-portal-wlr &
+/usr/libexec/xdg-desktop-portal-gtk &
+/usr/libexec/xdg-desktop-portal &
+
+#/usr/libexec/polkit-gnome-authentication-agent-1
+
+pipewire &
+pipewire-pulse &
+wireplumber &
+
+rivertile -view-padding 2 -outer-padding 2 &

@@ -1,0 +1,53 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 18,
+    "modules-left": ["river/tags"],
+    "modules-center": ["wlr/taskbar"],
+    "modules-right": [
+	"custom/keyboard",
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "temperature",
+        "backlight",
+        "battery",
+        "clock",
+        "tray"
+    ],
+
+    "river/tags": { "num-tags": 9 },
+
+    "wlr/taskbar": {
+        "format": "{title}",
+        "on-click": "activate",
+        "on-click-right": "close"
+    },
+
+    "clock": { "format": " {:%H:%M}" },
+    "cpu": { "format": " {usage}%" },
+    "memory": { "format": " {}%" },
+    "temperature": { "format": " {temperatureC}°C" },
+    "backlight": { "format": "☼ {percent}%" },
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": { 
+        "format-wifi": "", 
+        "format-ethernet": "",
+        "format-disconnected": "⚠" 
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-icons": { "default": ["", "", ""] },
+        "on-click": "pavucontrol"
+    },
+    "custom/keyboard": {
+        "format": "⌨️",
+        "tooltip": false,
+        "on-click": "~/.local/bin/toggle-keyboard.sh",
+        "return-type": "json"
+    }
+}
